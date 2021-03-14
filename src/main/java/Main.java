@@ -21,8 +21,8 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-            if (login(scanner)) {
-                menu(scanner);
+        if (login(scanner)) {
+            menu(scanner);
         }
 
     }
@@ -244,8 +244,7 @@ public class Main {
 
     public static boolean login(Scanner scanner) {
         boolean ans = true;
-        while(ans)
-        {
+        while (ans) {
             System.out.println("Enter User Name: ");
             String userName = scanner.nextLine();
             System.out.println("Enter password: ");
