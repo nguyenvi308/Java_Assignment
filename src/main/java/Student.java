@@ -1,16 +1,17 @@
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Student extends Person {
+@Builder
+@ToString
+public class Student  {
 
-    private String className;
-    private List<SubjectMark> subjectMarks;
+    private Long studentId;
+    private String studentName;
+    private List<Subject> subjects;
 
 
 
