@@ -7,12 +7,11 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @ToString
-public class Student  {
+public class Student {
 
     private Long studentId;
     private String studentName;
     private List<Subject> subjects;
-
 
 
 }

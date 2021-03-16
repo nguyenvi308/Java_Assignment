@@ -9,7 +9,6 @@ public class Subject {
 
     private String subjectName;
     private Double score;
-    private int time;
     private int numberOfQuestion;
     private int numberOfCorrectQuestions;
 
