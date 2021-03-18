@@ -15,19 +15,19 @@ public class DataUtils {
     public static List<Student> findMax(List<Student> list) {
         List<Double> scores = list.stream().map(x -> x.getSubjects().get(0).getScore()).collect(Collectors.toList());
         Double max = Collections.max(scores);
-        return list.stream()
-                .filter(x -> x.getSubjects().get(0).getScore() == max).collect(Collectors.toList());
+        List<Student> topStudent = new ArrayList<>();
+        return  list.stream().filter(student -> student.getSubjects().get(0).getScore().equals(max)).collect(Collectors.toList());
     }
 
     public static List<Student> findMin(List<Student> list) {
         List<Double> scores = list.stream().map(x -> x.getSubjects().get(0).getScore()).collect(Collectors.toList());
         Double min = Collections.min(scores);
         return list.stream()
-                .filter(x -> x.getSubjects().get(0).getScore() == min).collect(Collectors.toList());
+                .filter(x -> x.getSubjects().get(0).getScore().equals(min)).collect(Collectors.toList());
 
     }
 
-    public Map<Double, Integer> countTheSameScore(List<Student> lst) {
+    public static Map<Double, Integer> countTheSameScore(List<Student> lst) {
         List<Double> scores = new ArrayList<>();
         Map<Double, Integer> map = new TreeMap<>();
         for (Student student : lst) {
@@ -39,7 +39,7 @@ public class DataUtils {
         for (int i = 0; i < scores.size(); i++) {
             int count = 0;
             for (int j = 0; j < lst.size(); j++) {
-                if (scores.get(i) == lst.get(j).getSubjects().get(0).getScore()) {
+                if (scores.get(i).equals(lst.get(j).getSubjects().get(0).getScore())) {
                     count++;
                 }
 

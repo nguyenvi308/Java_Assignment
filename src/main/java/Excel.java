@@ -215,9 +215,12 @@ public class Excel {
         sheet.addMergedRegion(new CellRangeAddress(5, 5, 0, 1));
         Row subjectRow = sheet.createRow(5);
         Cell subjectCell = subjectRow.createCell(0);
+        CellStyle subjectCellStyle = wb.createCellStyle();
+        subjectCellStyle.setFont(commonFont);
         Cell subjectDataCell = subjectRow.createCell(2);
         subjectCell.setCellValue("Môn học");
-        subjectDataCell.setCellValue("Java");
+        subjectCell.setCellStyle(subjectCellStyle);
+        subjectDataCell.setCellValue(students.get(0).getSubjects().get(0).getSubjectName());
 
 
         // Number of student
@@ -225,26 +228,37 @@ public class Excel {
         Row numberOfStudentRow = sheet.createRow(6);
         Cell numberOfStudentCell = numberOfStudentRow.createCell(0);
         Cell numberOfStudentDataCell = numberOfStudentRow.createCell(2);
+        CellStyle numberOfStudentCellStyle = wb.createCellStyle();
+        numberOfStudentCellStyle.setFont(commonFont);
+
+
+        CellStyle numberOfStudentDataCellStyle = wb.createCellStyle();
+        numberOfStudentDataCellStyle.setAlignment(HorizontalAlignment.LEFT);
+
         numberOfStudentCell.setCellValue("Số lượng sinh viên");
-        numberOfStudentDataCell.setCellValue(25);
+        numberOfStudentDataCell.setCellValue(students.get(0).getSubjects().get(0).getNumberOfQuestion());
+        numberOfStudentDataCell.setCellStyle(numberOfStudentDataCellStyle);
+        numberOfStudentCell.setCellStyle(numberOfStudentCellStyle);
+
 
         // Time
         sheet.addMergedRegion(new CellRangeAddress(7, 7, 0, 1));
         Row markedTimeRow = sheet.createRow(7);
         Cell markedTimeCell = markedTimeRow.createCell(0);
         Cell markedTimeDataCell = markedTimeRow.createCell(2);
+        CellStyle markedTimeCellStyle = wb.createCellStyle();
+        markedTimeCellStyle.setAlignment(HorizontalAlignment.LEFT);
+        markedTimeCellStyle.setFont(commonFont);
         markedTimeCell.setCellValue("Thời gian chấm");
+        markedTimeCell.setCellStyle(markedTimeCellStyle);
         markedTimeDataCell.setCellValue(LocalDate.now().toString());
 
 
         sheet.addMergedRegion(new CellRangeAddress(
-                8, 8, 0, 1
+                8, 8, 0, 2
         ));
         sheet.addMergedRegion(new CellRangeAddress(
-                8, 8, 2, 4
-        ));
-        sheet.addMergedRegion(new CellRangeAddress(
-                8, 8, 5, 6
+                8, 8, 3, 6
         ));
         sheet.addMergedRegion(new CellRangeAddress(
                 8, 8, 7, 8
@@ -264,8 +278,7 @@ public class Excel {
 
 
         Cell id = row8.createCell(0);
-        Cell name = row8.createCell(2);
-        Cell subjectName = row8.createCell(5);
+        Cell name = row8.createCell(3);
         Cell score = row8.createCell(7);
         Cell note = row8.createCell(9);
 
@@ -276,8 +289,6 @@ public class Excel {
         name.setCellStyle(cellStyle1);
         name.setCellValue("Student Name");
 
-        subjectName.setCellStyle(cellStyle1);
-        subjectName.setCellValue("Subject Name");
 
         score.setCellStyle(cellStyle1);
         score.setCellValue("Score");
@@ -295,7 +306,6 @@ public class Excel {
             data.put(Long.valueOf(i), new Object[]{
                     students.get(i).getStudentId(),
                     students.get(i).getStudentName(),
-                    students.get(i).getSubjects().get(0).getSubjectName(),
                     students.get(i).getSubjects().get(0).getScore()});
         }
 
@@ -305,48 +315,56 @@ public class Excel {
 
             Row row1 = sheet.createRow(i);
             // Get data from map must be from 0
+            sheet.addMergedRegion(new CellRangeAddress(
+                    i, i, 0, 2
+            ));
+            sheet.addMergedRegion(new CellRangeAddress(
+                    i, i, 3, 6
+            ));
+            sheet.addMergedRegion(new CellRangeAddress(
+                    i, i, 7, 8
+            ));
+            sheet.addMergedRegion(new CellRangeAddress(
+                    i, i, 9, 11
+            ));
+
+
             int index = i - startFrom;
             // longs.get(index) get index for get value from map
             Object[] objArr = data.get(longs.get(index));
             //Mere cell
+
+
+            CellStyle dataCellType = wb.createCellStyle();
+            dataCellType.setAlignment(HorizontalAlignment.LEFT);
+
             for (int j = 0; j < objArr.length; j++) {
                 {
-                    if (j == 0 || j == 2 || j == 3) {
-                        sheet.addMergedRegion(new CellRangeAddress(i, i, j, j + 1));
-                        Cell cell1 = row1.createCell(j);
-                        if (objArr[j] instanceof Long) { // Student ID
-                            cell1.setCellValue((Long) objArr[j]);
-                        } else if (objArr[j] instanceof String) { // Student Name
-                            cell1.setCellValue((String) objArr[j]);
-                        } else if (objArr[j] instanceof String) // Subject Name
-                        {
-                            cell1.setCellValue((String) objArr[j]);
-                        } else if (objArr[j] instanceof Double) // Score
-                        {
-                            cell1.setCellValue((Double) objArr[j]);
-                        }
-                    } else {
-                        sheet.addMergedRegion(new CellRangeAddress(i, i, j, j + 2));
-                        Cell cell1 = row1.createCell(j);
-                        if (objArr[j] instanceof Long) { // Student ID
-                            cell1.setCellValue((Long) objArr[j]);
-                        } else if (objArr[j] instanceof String) { // Student Name
-                            cell1.setCellValue((String) objArr[j]);
-                        } else if (objArr[j] instanceof String) // Subject Name
-                        {
-                            cell1.setCellValue((String) objArr[j]);
-                        } else if (objArr[j] instanceof Double) // Score
-                        {
-                            cell1.setCellValue((Double) objArr[j]);
-                        }
+
+                    if (objArr[j] instanceof Long) { // Student ID
+                        Cell cell1 = row1.createCell(0);
+                        cell1.setCellStyle(dataCellType);
+                        cell1.setCellValue((Long) objArr[j]);
+
                     }
+                    if (objArr[j] instanceof String) { // Student Name
+
+                        row1.createCell(3).setCellValue((String) objArr[j]);
+
+                    }
+                    if (objArr[j] instanceof Double) // Score
+                    {
+                        row1.createCell(7).setCellValue((Double) objArr[j]);
+                    }
+
 
                 }
 
-
             }
 
+
         }
+
 
         // Write the output to a file
         try (OutputStream fileOut = new FileOutputStream("workbook.xlsx")) {

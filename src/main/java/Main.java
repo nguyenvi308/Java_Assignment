@@ -1,3 +1,4 @@
+import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -9,15 +10,26 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         // Main Function
-        if (login(scanner)) {
-            menu(scanner);
-        }
+//        if (login(scanner)) {
+//            menu(scanner);
+//        }
 
         List<Student> arr = Arrays.asList(
                 new Student(11181170l, "Nguyen Van Vi", Arrays.asList(new Subject("Java", 5.6, 27, 7))),
-                new Student(11181170l, "Nguyen Hoang Minh", Arrays.asList(new Subject("Java", 7.0, 27, 10))));
+                new Student(11181340l, "Nguyen Hoang Minh", Arrays.asList(new Subject("Java", 7.0, 27, 10))),
+                new Student(11143440l, "Nguyen Cong Minh", Arrays.asList(new Subject("Java", 9.0, 27, 10))),
+                new Student(11343340l, "Tran Thanh Loan", Arrays.asList(new Subject("Java", 6.5, 27, 10))),
+                new Student(16771340l, "Nguyen Thi Kieu Thuy", Arrays.asList(new Subject("Java", 5.5, 27, 10))),
+                new Student(11147540l, "Nguyen Thu Hien", Arrays.asList(new Subject("Java", 7.6, 27, 10))),
+                new Student(15361340l, "Le Quang Liem", Arrays.asList(new Subject("Java", 8.2, 27, 10))),
+                new Student(11646460l, "Nguyen Van Dung", Arrays.asList(new Subject("Java", 5.5, 27, 10))),
+                new Student(11756540l, "Le Mai Anh", Arrays.asList(new Subject("Java", 7.5, 27, 10))),
+                new Student(11186440l, "Nguyen Thi Thuy Ha", Arrays.asList(new Subject("Java", 9.0, 27, 10))));
 
-        Excel.writeResultWithoutFormat(arr);
+        System.out.println("Max List  " + DataUtils.findMax(arr));
+        System.out.println("Min List " + DataUtils.findMin(arr));
+        System.out.println("Count the same " + DataUtils.countTheSameScore(arr));
+        Excel.writeResultWithFormat(arr);
     }
 
     public static void menu(Scanner scanner) throws IOException {
